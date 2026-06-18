@@ -16,27 +16,27 @@ class Card:
     
 class Deck:
     def __init__(self):
-        self.all_cards=[]
+        self.deck=[]
         for suit in suits:
             for rank in ranks:
                 creat_card = Card(suit,rank)
-                self.all_cards.append(creat_card)
+                self.deck.append(creat_card)
     
 
 
     def __str__(self):
         deck_com=''
-        for card in self.all_cards:
+        for card in self.deck:
             deck_comp+='\n'+ card.__str__()
         return "The deck has: "+deck_com
 
 
 
     def shuffle(self):
-        random.shuffle(self.all_cards)
+        random.shuffle(self.deck)
 
     def deal_one(self):
-        single_card=self.all_cards.pop()
+        single_card=self.deck.pop()
         return single_card
     
 class Hand:
@@ -71,16 +71,15 @@ class Chips:
     def lose_bet(self):
         self.total-=self.bet
 
-def take_bet():
+def take_bet(chips):
     while True:
-        chip=Chips()
         try:
-            chip.bet=int(input("Enter the bet amount you want to give:"))
+            chips.bet=int(input("Enter the bet amount you want to give:"))
         except:
             print("Only Integer Values !!!!!")
         else:
-            if chip.bet>chip.total:
-                print("You don't have enough chips available with you, {} is your balance amount".format(chip.total))
+            if chips.bet>chips.total:
+                print("You don't have enough chips available with you, {} is your balance amount".format(chips.total))
             else: 
                 break
 
@@ -88,8 +87,6 @@ def take_bet():
     
 
 def hit(deck,hand):
-    deck=Deck()
-    hand=Hand()
     Single_card=deck.deal_one()
     hand.add_cards(Single_card)
     hand.adjust_for_ace()
@@ -138,25 +135,21 @@ def show_all(player,dealer):
 
 
 def player_busts(player,dealer,chips):
-    chip=Chips()
     print("BUST PLAYER !")
-    chip.lose_bet()
+    chips.lose_bet()
     
 
 def player_wins(player,dealer,chips):
-    chip=Chips()
     print("PLAYER WINS!")
-    chip.win_bet()
+    chips.win_bet()
 
 def dealer_busts(player,dealer,chips):
-    chip=Chips()
     print("PLAYER WINS! DEALER BUSTED!")
-    chip.win_bet()
+    chips.win_bet()
 
 def dealer_win(player,dealer,chips):
-    chip=Chips()
     print("DEALER WINS !")
-    chip.lose_bet()
+    chips.lose_bet()
 
 def push(player,dealer,chips):
     print("Dealer and player tie! PUSH")
@@ -223,13 +216,18 @@ while True:
 
         newgame=input("Would you like to play another hand? y/n")
 
-        if newgame[0].lower()=='y':
-            playing=True
-            continue
-        else:
-            print("Thank You For Playing!")
 
-            break
+        try:
+            if newgame[0].lower()=='y':
+             playing=True
+             continue
+
+        except:
+            print("Only Enter 'y' or 'n'")
+        else:
+              print("Thank You For Playing!")
+              break
+        
 
         
 
