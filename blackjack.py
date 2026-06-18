@@ -135,22 +135,26 @@ def show_all(player,dealer):
         print(card)
     print(f"Value of Player's hand is : {dealer.value}")
 
-chip=Chips()
+
 
 def player_busts(player,dealer,chips):
+    chip=Chips()
     print("BUST PLAYER !")
     chip.lose_bet()
     
 
 def player_wins(player,dealer,chips):
+    chip=Chips()
     print("PLAYER WINS!")
     chip.win_bet()
 
 def dealer_busts(player,dealer,chips):
+    chip=Chips()
     print("PLAYER WINS! DEALER BUSTED!")
     chip.win_bet()
 
 def dealer_win(player,dealer,chips):
+    chip=Chips()
     print("DEALER WINS !")
     chip.lose_bet()
 
@@ -161,19 +165,71 @@ playing = True
 
 
 while True:
+    print("WELCOME TO CASINO $$$$$$$")
+    
+    deck=Deck()
+    deck.shuffle()
+
+    player_hand=Hand()
+    player_hand.add_cards(deck.deal_one())
+    player_hand.add_cards(deck.deal_one())
+
+    dealer_hand=Hand()
+    dealer_hand.add_cards(deck.deal_one())
+    dealer_hand.add_cards(deck.deal_one())
 
 
+    player_chips=Chips()
+
+    take_bet(player_chips)
+
+
+    show_some(player_hand,dealer_hand)
+
+    
 
 
     while playing:
 
+        hit_or_stand( deck,player_hand)
+
+        show_some(player_hand,dealer_hand)
 
 
+        if player_hand.value > 21:
+            player_busts(player_hand,dealer_hand,player_chips)
+
+            break
 
 
+        if player_hand.value <= 21:
+
+            while dealer_hand.value < 17:
+                hit(deck,dealer_hand)
+
+            show_all(player_hand,dealer_hand)
+
+            if dealer_hand.value > 21:
+                dealer_busts(player_hand,dealer_hand,player_chips)
+            elif dealer_hand.value > player_hand.value:
+                dealer_win(player_hand,dealer_hand,player_chips)
+            elif dealer_hand.value < player_hand.value:
+                player_wins(player_hand,dealer_hand,player_chips)
+            else:
+                push(player_hand,dealer_hand)
 
 
-        break
+        print('\n Player total chips are at : {} '.format(player_chips.total))
+
+        newgame=input("Would you like to play another hand? y/n")
+
+        if newgame[0].lower()=='y':
+            playing=True
+            continue
+        else:
+            print("Thank You For Playing!")
+
+            break
 
         
 
