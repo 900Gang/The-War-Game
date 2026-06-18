@@ -60,7 +60,7 @@ class Hand:
         
 
 
-class chips:
+class Chips:
     def __init__(self,total=100):
         self.total = total
         self.bet=0
@@ -73,7 +73,7 @@ class chips:
 
 def take_bet():
     while True:
-        chip=chips()
+        chip=Chips()
         try:
             chip.bet=int(input("Enter the bet amount you want to give:"))
         except:
@@ -128,27 +128,34 @@ def show_all(player,dealer):
         print(card)
     print(f"Value of Dealer's hand is : {dealer.value}")
 
-    
+
 
     print("\n Player's Hand: ")
     for card in player.cards:
         print(card)
     print(f"Value of Player's hand is : {dealer.value}")
 
-def player_busts():
-    pass
+chip=Chips()
 
-def player_wins():
-    pass
+def player_busts(player,dealer,chips):
+    print("BUST PLAYER !")
+    chip.lose_bet()
+    
 
-def dealer_busts():
-    pass
+def player_wins(player,dealer,chips):
+    print("PLAYER WINS!")
+    chip.win_bet()
 
-def dealer_win():
-    pass
+def dealer_busts(player,dealer,chips):
+    print("PLAYER WINS! DEALER BUSTED!")
+    chip.win_bet()
 
-def push():
-    pass
+def dealer_win(player,dealer,chips):
+    print("DEALER WINS !")
+    chip.lose_bet()
+
+def push(player,dealer,chips):
+    print("Dealer and player tie! PUSH")
 
 playing = True
 
