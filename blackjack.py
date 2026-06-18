@@ -66,20 +66,50 @@ class chips:
         self.bet=0
 
     def win_bet(self):
-        pass
+        self.total+= self.bet
 
     def lose_bet(self):
-        pass
+        self.total-=self.bet
 
 def take_bet():
-    pass
+    while True:
+        chip=chips()
+        try:
+            chip.bet=int(input("Enter the bet amount you want to give:"))
+        except:
+            print("Only Integer Values !!!!!")
+        else:
+            if chip.bet>chip.total:
+                print("You don't have enough chips available with you, {} is your balance amount".format(chip.total))
+            else: 
+                break
+
+
+    
 
 def hit(deck,hand):
-    pass
+    deck=Deck()
+    hand=Hand()
+    Single_card=deck.deal_one()
+    hand.add_cards(Single_card)
+    hand.adjust_for_ace()
 
 def hit_or_stand(deck,hand):
     global playing
-    pass
+    
+    while True:
+        x =input("Hit or Stand ? Enter 'h' or 's'").split(" ")
+        if x[0].lower() == 'h':
+            hit(deck,hand)
+        elif x[0].lower() == 's':
+            print("Player Stand's Dealer's Turn")
+            playing=False
+        else:
+            print("Sorry , I did not understand that , Please enter 'h' or 's' ")
+            continue
+        break
+
+
 
 def show_some(player,dealer):
     pass
